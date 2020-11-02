@@ -43,7 +43,10 @@ class SearchBar extends React.Component {
   }
 
   handleSearch(event) {
-    this.props.searchYelp(this.state.term, this.state.location, this.state.sortBy);
+    if (this.state.term == null || this.state.location == null) {
+      alert("Search cannot be empty")
+    }
+    else this.props.searchYelp(this.state.term, this.state.location, this.state.sortBy);
 
     event.preventDefault();
   }
@@ -72,7 +75,7 @@ class SearchBar extends React.Component {
           <input placeholder="Where?" onChange={this.handleLocationChange}/>
         </div>
         <div className="SearchBar-submit">
-          <a onClick={this.handleSearch}>Let's Go</a>
+          <button onClick={this.handleSearch}>Let's Go</button>
         </div>
       </div>
     );
