@@ -1,14 +1,13 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 ### live version
-https://lets-eat-us.netlify.app/
+https://lets-eat-v1.netlify.app/
 <br/>if using chrome browser, you may need to open the url in incognito mode because of Netlify hosting without a generic domain.
 
 ## Available Scripts
 
 To run on local sever, run:
-
-### `npm start`
-
+`npm install`
+`npm start`
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
