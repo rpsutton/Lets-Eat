@@ -1,9 +1,10 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Lets's Eat
+A react yelp clone which utlizes the yelp-api.
 ### live version
 https://lets-eat-v1.netlify.app/
 <br/>if using chrome browser, you may need to open the url in incognito mode because of Netlify hosting without a generic domain.
 
-## Available Scripts
+### Available Scripts
 
 To run on local sever, run:
 <br/>
