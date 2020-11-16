@@ -60,9 +60,9 @@ function SearchBar(props) {
           to="businessList"
           spy={true}
           smooth={true}
-          offset={-70}
           duration={500}
-          delay={1000}
+          delay={1500}
+          offset={50}
           >
           <Button onClick={handleSearch}>Search</Button>
           </Link>
