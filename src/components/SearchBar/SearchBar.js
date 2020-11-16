@@ -1,85 +1,78 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './SearchBar.css';
+import Form from "react-bootstrap/Form"
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import { Link } from "react-scroll";
+import Spinner from "react-bootstrap/Spinner";
 
-class SearchBar extends React.Component {
-  constructor(props) {
-    super(props);
+function SearchBar(props) {
+  const [term, setTerm] = useState("");
+  const [location, setLocation] = useState("");
+  const [sortBy, setSortBy] = useState('best_match');
 
-    this.state = {
-      term: '',
-      location: '',
-      sortBy: 'best_match'
-    };
-
-    this.handleTermChange = this.handleTermChange.bind(this);
-    this.handleLocationChange = this.handleLocationChange.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
-    this.handleSortByChange = this.handleSortByChange.bind(this);
-
-    this.sortByOptions = {
-      'Best Match': 'best_match',
-      'Highest Rated': 'rating',
-      'Most Reviewed': 'review_count'
-    };
+  function handleSortByChange(event) {
+    setSortBy(event.target.value);
   }
 
-  getSortByClass(sortByOption) {
-    if (this.state.sortBy === sortByOption) {
-      return 'active';
+  function handleTermChange(event) {
+    setTerm(event.target.value);
+  }
+
+  function handleLocationChange(event) {
+    setLocation(event.target.value);
+  }
+
+  function handleSearch(event) {
+    if (term === "" || location === "") {
+      alert("Please make sure both fields are filled out");
     }
-    return '';
-  }
-
-  handleSortByChange(sortByOption) {
-    this.setState({sortBy: sortByOption});
-  }
-
-  handleTermChange(event) {
-    this.setState({term: event.target.value});
-  }
-
-  handleLocationChange(event) {
-    this.setState({location: event.target.value});
-  }
-
-  handleSearch(event) {
-    if (this.state.term == null || this.state.location == null) {
-      alert("Search cannot be empty")
+    else {
+      props.searchYelp(term, location, sortBy);
     }
-    else this.props.searchYelp(this.state.term, this.state.location, this.state.sortBy);
 
     event.preventDefault();
   }
 
-  renderSortByOptions() {
-    return Object.keys(this.sortByOptions).map(sortByOption => {
-      let sortByOptionValue = this.sortByOptions[sortByOption];
-      return (<li className={this.getSortByClass(sortByOptionValue)}
-                  key={sortByOptionValue}
-                  onClick={this.handleSortByChange.bind(this, sortByOptionValue)}>
-                {sortByOption}
-             </li>);
-    });
-  }
-
-  render() {
     return (
-      <div className="SearchBar">
-        <div className="SearchBar-sort-options">
-          <ul>
-            {this.renderSortByOptions()}
-          </ul>
-        </div>
-        <div className="SearchBar-fields">
-          <input placeholder="Search a Business, Food, or Category" onChange={this.handleTermChange} />
-          <input placeholder="Where?" onChange={this.handleLocationChange}/>
-        </div>
-        <div className="SearchBar-submit">
-          <button onClick={this.handleSearch}>Let's Go</button>
-        </div>
+      <div className="d-flex justify-content-center align-items-center flex-column SearchBar">
+      <div className="SearchBar-fields">
+        <Form.Control placeholder="Search a Business, Food, or Category" onChange={handleTermChange}/>
+        <Form.Control placeholder="Where?" onChange={handleLocationChange}/>
       </div>
+      <div className="SearchBar-submit">
+        <Form>
+        <Form.Row className="align-items-center">
+          <Col xs="auto" className="my-1">
+            <Form.Control
+              as="select"
+              className="mr-sm-2"
+              id="inlineFormCustomSelect"
+              custom
+              onChange={handleSortByChange}
+            >
+              <option value="best_match">Best Match</option>
+              <option value="rating">Best Rating</option>
+              <option value="review_count">Most Reviews</option>
+            </Form.Control>
+          </Col>
+          <Col xs="auto" className="my-1">
+          <Link 
+          to="businessList"
+          spy={true}
+          smooth={true}
+          offset={-70}
+          duration={500}
+          delay={1000}
+          >
+          <Button onClick={handleSearch}>Search</Button>
+          </Link>
+          </Col>
+        </Form.Row>
+      </Form>
+      </div>
+    </div>
     );
   }
-}
 
 export default SearchBar;
